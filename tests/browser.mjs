@@ -1,0 +1,18 @@
+import {chromium} from '@playwright/test';import assert from 'node:assert/strict';import fs from 'node:fs';
+const browser=await chromium.launch({headless:true,args:['--enable-webgl','--use-gl=angle','--use-angle=swiftshader']});
+const page=await browser.newPage({viewport:{width:1440,height:1000},deviceScaleFactor:1});const errors=[];page.on('pageerror',e=>errors.push(e.message));
+await page.goto('http://127.0.0.1:5173');await page.waitForFunction(()=>window.__cargoReady,{timeout:60000});
+const manifest=JSON.parse(fs.readFileSync('public/data/manifest.json'));assert.equal((await page.locator('#voyage-count').textContent()).replaceAll(',',''),String(manifest.voyages));
+await page.waitForTimeout(2500);await page.screenshot({path:'docs/map-desktop.png',fullPage:true});
+const all=JSON.parse(fs.readFileSync('public/data/all.json')).edges;
+const strongest=[...all].sort((a,b)=>b.voyage_count-a.voyage_count)[0];
+await page.selectOption('#port',strongest.origin_id);await page.locator('[data-direction="outbound"]').click();
+const sum=all.filter(e=>e.origin_id===strongest.origin_id).reduce((n,e)=>n+e.voyage_count,0);
+assert.equal((await page.locator('#voyage-count').textContent()).replaceAll(',',''),String(sum));
+await page.locator('.connection').first().click();await page.locator('.maplibregl-popup').waitFor();assert.match(await page.locator('.route-popup').textContent(),/observed vessel voyages/);
+await page.selectOption('#month','2025-03');await page.waitForTimeout(600);assert.equal(await page.locator('.maplibregl-popup').count(),0);
+const month=JSON.parse(fs.readFileSync('public/data/2025-03.json')).edges;const expected=month.filter(e=>e.origin_id===strongest.origin_id).reduce((n,e)=>n+e.voyage_count,0);
+assert.equal((await page.locator('#voyage-count').textContent()).replaceAll(',',''),String(expected));
+await page.locator('#reset').click();await page.selectOption('#month','all');await page.waitForTimeout(600);
+await page.setViewportSize({width:390,height:844});await page.waitForTimeout(700);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await page.screenshot({path:'docs/map-mobile.png',fullPage:true});
+assert.deepEqual(errors,[]);await browser.close();console.log('Browser checks passed: loaded geographic map, data totals, port/direction/month filters, popup, responsive layout, no uncaught errors.');

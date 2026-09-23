@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Dataset provenance and coverage",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "year",
+    "dataset",
+    "provider",
+    "coverage",
+    "is_sample",
+    "cohort_vessels",
+    "vessels_with_voyages",
+    "events",
+    "ports",
+    "voyages",
+    "directed_connections",
+    "retrieved_at",
+    "ingestion_complete",
+    "window",
+    "periods",
+    "month_assignment",
+    "metric",
+    "geometry",
+    "max_gap_days",
+    "sample_method",
+    "quality",
+    "boundary_caveat"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "year": {
+      "type": "integer"
+    },
+    "dataset": {
+      "type": "string"
+    },
+    "provider": {
+      "type": "string"
+    },
+    "coverage": {
+      "type": "string"
+    },
+    "is_sample": {
+      "type": "boolean"
+    },
+    "cohort_vessels": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "vessels_with_voyages": {
+      "type": "integer"
+    },
+    "events": {
+      "type": "integer"
+    },
+    "ports": {
+      "type": "integer"
+    },
+    "voyages": {
+      "type": "integer"
+    },
+    "directed_connections": {
+      "type": "integer"
+    },
+    "retrieved_at": {
+      "type": "string"
+    },
+    "ingestion_complete": {
+      "type": "boolean"
+    },
+    "window": {
+      "type": "object"
+    },
+    "periods": {
+      "type": "array"
+    },
+    "month_assignment": {
+      "type": "string"
+    },
+    "metric": {
+      "type": "string"
+    },
+    "geometry": {
+      "type": "string"
+    },
+    "max_gap_days": {
+      "type": "number"
+    },
+    "sample_method": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "quality": {
+      "type": "object"
+    },
+    "boundary_caveat": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

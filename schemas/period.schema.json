@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "period",
+  "type": "object",
+  "properties": {
+    "period": {
+      "type": "string"
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "origin_id": {
+            "type": "string"
+          },
+          "destination_id": {
+            "type": "string"
+          },
+          "voyage_count": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "teu": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "cargo_tonnes": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "trade_value_usd": {
+            "type": [
+              "number",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "origin_id",
+          "destination_id",
+          "voyage_count",
+          "teu",
+          "cargo_tonnes",
+          "trade_value_usd"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "period",
+    "edges"
+  ],
+  "additionalProperties": false
+}

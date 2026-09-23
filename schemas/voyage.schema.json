@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "voyage",
+  "type": "object",
+  "properties": {
+    "voyage_id": {
+      "type": "string"
+    },
+    "vessel_id": {
+      "type": "string"
+    },
+    "ssvid": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "origin_id": {
+      "type": "string"
+    },
+    "destination_id": {
+      "type": "string"
+    },
+    "origin_arrival": {
+      "type": "string"
+    },
+    "departure": {
+      "type": "string"
+    },
+    "arrival": {
+      "type": "string"
+    },
+    "destination_departure": {
+      "type": "string"
+    },
+    "origin_event_id": {
+      "type": "string"
+    },
+    "destination_event_id": {
+      "type": "string"
+    },
+    "year": {
+      "type": "integer"
+    },
+    "month": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$"
+    },
+    "voyage_count": {
+      "const": 1
+    },
+    "teu": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "cargo_tonnes": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "trade_value_usd": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "const": "Global Fishing Watch"
+        },
+        "dataset": {
+          "type": "string"
+        },
+        "method": {
+          "const": "consecutive_distinct_port_visits"
+        }
+      },
+      "required": [
+        "provider",
+        "dataset",
+        "method"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "voyage_id",
+    "vessel_id",
+    "ssvid",
+    "origin_id",
+    "destination_id",
+    "origin_arrival",
+    "departure",
+    "arrival",
+    "destination_departure",
+    "origin_event_id",
+    "destination_event_id",
+    "year",
+    "month",
+    "voyage_count",
+    "teu",
+    "cargo_tonnes",
+    "trade_value_usd",
+    "provenance"
+  ],
+  "additionalProperties": false
+}

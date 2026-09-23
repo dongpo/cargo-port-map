@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "visit",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "event_id": {
+          "type": "string"
+        },
+        "visit_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "vessel_id": {
+          "type": "string"
+        },
+        "ssvid": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "vessel_type": {
+          "type": "string"
+        },
+        "port_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "port_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "port_flag": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "anchorage_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "longitude": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "latitude": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "arrival": {
+          "type": "string"
+        },
+        "departure": {
+          "type": "string"
+        },
+        "confidence": {
+          "type": [
+            "number",
+            "string",
+            "null"
+          ]
+        },
+        "rejection": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "provenance": {
+          "type": "object",
+          "properties": {
+            "provider": {
+              "const": "Global Fishing Watch"
+            },
+            "dataset": {
+              "type": "string"
+            },
+            "source_event_id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "provider",
+            "dataset"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "event_id",
+        "visit_id",
+        "vessel_id",
+        "ssvid",
+        "vessel_type",
+        "port_id",
+        "port_name",
+        "port_flag",
+        "anchorage_id",
+        "longitude",
+        "latitude",
+        "arrival",
+        "departure",
+        "confidence",
+        "rejection",
+        "provenance"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "event_id": {
+          "type": "string"
+        },
+        "vessel_id": {
+          "type": "string"
+        },
+        "arrival": {
+          "const": ""
+        },
+        "rejection": {
+          "const": "unorderable"
+        }
+      },
+      "required": [
+        "event_id",
+        "vessel_id",
+        "arrival",
+        "rejection"
+      ],
+      "additionalProperties": false
+    }
+  ]
+}
