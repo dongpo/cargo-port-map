@@ -11,11 +11,11 @@ npm ci
 npm run dev
 ```
 
-Open http://127.0.0.1:5173. The included processed data works immediately, with no API credential. For a production build:
+Open http://127.0.0.1:1234. The included processed data works immediately, with no API credential. For a production build:
 
 ```sh
 npm run build
-python3 -m http.server 5173 --bind 127.0.0.1 --directory dist
+python3 -m http.server 1234 --bind 127.0.0.1 --directory dist
 ```
 
 Only serve `dist`, not the project root. Basemap geometry is bundled Natural Earth 1:50m data. Optional interface web fonts use Google Fonts; the map geometry and local data do not require an internet connection. Country borders are shown without country labels. WebGL is required.
