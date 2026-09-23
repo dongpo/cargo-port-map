@@ -20,6 +20,14 @@ python3 -m http.server 1234 --bind 127.0.0.1 --directory dist
 
 Only serve `dist`, not the project root. Basemap geometry is bundled Natural Earth 1:50m data. Optional interface web fonts use Google Fonts; the map geometry and local data do not require an internet connection. Country borders are shown without country labels. WebGL is required.
 
+## Public website
+
+[Open the published cargo map](https://dongpo.github.io/cargo-port-map/).
+
+GitHub Pages publishes the static map automatically when changes reach `main`, using `.github/workflows/pages.yml`. The workflow runs the tests, builds with `npm run build:pages`, and uploads only `dist`. It does not run ingestion or require a GFW credential. The Pages build uses `/cargo-port-map/` for application assets, map geometry and processed data; the normal local build continues to use `/`.
+
+To preview the Pages build locally, run `npm run build:pages` followed by `npm run preview -- --port 4173`, then open `http://localhost:4173/cargo-port-map/`.
+
 ## What is included—and what is not
 
 The initial map uses a **live-data cohort of 120 cargo vessels**, not the complete worldwide fleet and not synthetic data. All 22,660 returned events belong to those vessels and have GFW type `cargo`. Their complete API histories within 2024-12-01 through 2026-02-01 were fetched. These produce 18,237 destination-arrival-year 2025 voyages, 3,709 directed connections, and 1,072 ports participating in those voyages. There are 1,140 distinct source ports including padding-only and isolated visits.

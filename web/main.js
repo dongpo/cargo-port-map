@@ -4,18 +4,19 @@ maplibregl.setWorkerUrl(workerUrl);
 import 'maplibre-gl/dist/maplibre-gl.css';
 import './style.css';
 import {filterEdges,stats,greatCircle} from './model.js';
+const assetPath=path=>`${import.meta.env.BASE_URL}${path.replace(/^\//,'')}`;
 const $=id=>document.getElementById(id),fmt=n=>new Intl.NumberFormat('en').format(n);
 let ports=[],byId=new Map(),edges=[],selected='',direction='both',manifest,requestId=0,popup;
 const empty={type:'FeatureCollection',features:[]};
 const map=new maplibregl.Map({container:'map',center:[35,19],zoom:1.55,minZoom:0,maxZoom:14,renderWorldCopies:false,
- style:{version:8,sources:{basemap:{type:'geojson',data:'/basemap/countries.geojson',attribution:'Natural Earth · public domain'}},layers:[{id:'ocean',type:'background',paint:{'background-color':'#091c27'}},{id:'land',type:'fill',source:'basemap',paint:{'fill-color':'#20343c'}},{id:'boundaries',type:'line',source:'basemap',paint:{'line-color':'#3d5157','line-width':.5}}]},attributionControl:true});
+ style:{version:8,sources:{basemap:{type:'geojson',data:assetPath('basemap/countries.geojson'),attribution:'Natural Earth · public domain'}},layers:[{id:'ocean',type:'background',paint:{'background-color':'#091c27'}},{id:'land',type:'fill',source:'basemap',paint:{'fill-color':'#20343c'}},{id:'boundaries',type:'line',source:'basemap',paint:{'line-color':'#3d5157','line-width':.5}}]},attributionControl:true});
 map.addControl(new maplibregl.NavigationControl({showCompass:false}),'top-right');
 map.addControl(new maplibregl.ScaleControl({unit:'nautical'}),'bottom-right');
 let tileError=false;
 map.on('error',()=>{if(!tileError){tileError=true;$('notice').hidden=false;$('notice').textContent='A map resource could not load. Reload the page or check the local server.';}});
 function worldView(duration=0){map.fitBounds([[-180,-58],[180,75]],{padding:{top:130,bottom:60,left:25,right:25},duration});}
 const mapReady=new Promise(resolve=>map.on('load',()=>{worldView();resolve();}));
-async function json(path){const r=await fetch(path);if(!r.ok)throw new Error('Processed data unavailable. Run the ETL build and reload.');return r.json();}
+async function json(path){const r=await fetch(assetPath(path));if(!r.ok)throw new Error('Processed data unavailable. Run the ETL build and reload.');return r.json();}
 function label(p){return p?.name||p?.id||'Unknown port';}
 function notice(s){$('notice').hidden=!s;$('notice').textContent=s;}
 function updatePortOptions(){const q=$('search').value.toLowerCase(),filtered=ports.filter(p=>`${label(p)} ${p.flag||''} ${p.id}`.toLowerCase().includes(q));$('port').replaceChildren(new Option('All observed ports',''));for(const p of filtered)$('port').add(new Option(`${label(p)} · ${p.flag||'—'}`,p.id));if(selected&&!filtered.some(p=>p.id===selected)){$('port').add(new Option(label(byId.get(selected)),selected));}$('port').value=selected;}
